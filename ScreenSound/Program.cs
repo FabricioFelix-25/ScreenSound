@@ -113,7 +113,7 @@ internal class Program
         void MostrarBandasRegistradas()
         {
             Console.Clear();
-            ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação");
+            ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação.");
 
             foreach (string banda in bandasRegistradas.Keys)
             {
