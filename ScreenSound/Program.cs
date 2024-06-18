@@ -12,6 +12,7 @@ internal class Program
         ira.AdicionarNota(new Avaliacao(8));
         ira.AdicionarNota(new Avaliacao(6));
         Banda beatles = new Banda("the beatles");
+        beatles.AdicionarNota(new Avaliacao(9));
 
         Dictionary<string, Banda> bandasRegistradas = new();
         bandasRegistradas.Add(ira.Nome, ira);
