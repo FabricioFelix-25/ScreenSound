@@ -17,6 +17,14 @@ internal class Program
         bandasRegistradas.Add(ira.Nome, ira);
         bandasRegistradas.Add(beatles.Nome, beatles);
 
+        Dictionary<int, Menu> opcoes = new();
+        opcoes.Add(1, new MenuRegistrarBanda());
+        opcoes.Add(2, new MenuRegistrarAlbum());
+        opcoes.Add(3, new MenuMostrarBandas());
+        opcoes.Add(4, new MenuAvaliarBanda());
+        opcoes.Add(5, new MenuExibirDetalhes());
+        opcoes.Add(-1, new MenuSair());
+
         void ExibirLogo()
         {
             Console.WriteLine(@"
@@ -45,26 +53,51 @@ internal class Program
             string opcaoEscolhida = Console.ReadLine()!;
             int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
 
+            if (opcoes.ContainsKey(opcaoEscolhidaNumerica))
+            {
+                Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
+                menuASerExibido.Executar(bandasRegistradas);
+            }
+            else
+            {
+                Console.WriteLine("Opção inválida");
+            }
+
+
+
             switch (opcaoEscolhidaNumerica)
             {
                 case 1:
-                    RegistrarBanda();
+
+                    MenuRegistrarBanda menu1 = new();
+                    menu1 = new MenuRegistrarBanda();
+                    ExibirOpcoesDoMenu();
                     break;
                 case 2:
-                    RegistrarAlbum();
+                    MenuRegistrarAlbum menu2 = new();
+                    menu2.Executar(bandasRegistradas);
+                    ExibirOpcoesDoMenu();
+
                     break;
                 case 3:
-                    MostrarBandasRegistradas();
+                    MenuMostrarBandas menu3 = new();
+                    menu3.Executar(bandasRegistradas);
+                    ExibirOpcoesDoMenu();
+
                     break;
                 case 4:
-                    AvaliarUmaBanda();
+                    MenuAvaliarBanda menu4 = new();
+                    menu4.Executar(bandasRegistradas);
+                    ExibirOpcoesDoMenu();
                     break;
                 case 5:
-                    MenuExibirDetalhes menu = new MenuExibirDetalhes();
-                    menu.Executar(bandasRegistradas);
+                    MenuExibirDetalhes menu5 = new();
+                    menu5.Executar(bandasRegistradas);
                     ExibirOpcoesDoMenu();
                     break;
                 case -1:
+                    MenuSair menu0 = new();
+                    menu0.Executar(bandasRegistradas);
                     Console.WriteLine("Tchau tchau :)");
                     break;
                 default:
@@ -72,97 +105,6 @@ internal class Program
                     break;
             }
         }
-
-        void RegistrarAlbum()
-        {
-            Console.Clear();
-            ExibirTituloDaOpcao("Registro de álbuns");
-            Console.Write("Digite a banda cujo álbum deseja registrar: ");
-            string nomeDaBanda = Console.ReadLine()!;
-            if (bandasRegistradas.ContainsKey(nomeDaBanda))
-            {
-                Console.Write("Agora digite o título do álbum: ");
-                string tituloAlbum = Console.ReadLine()!;
-                Banda banda = bandasRegistradas[nomeDaBanda];
-                banda.AdicionarAlbum(new Album(tituloAlbum));
-                Console.WriteLine($"O álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso!");
-                Thread.Sleep(4000);
-                Console.Clear();
-            }
-            else
-            {
-                Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
-                Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-                Console.ReadKey();
-                Console.Clear();
-            }
-            ExibirOpcoesDoMenu();
-        }
-
-
-
-        void RegistrarBanda()
-        {
-            Console.Clear();
-            ExibirTituloDaOpcao("Registro das bandas");
-            Console.Write("Digite o nome da banda que deseja registrar: ");
-            string nomeDaBanda = Console.ReadLine()!;
-            Banda banda = new Banda(nomeDaBanda);
-            bandasRegistradas.Add(nomeDaBanda, banda);
-            Console.WriteLine($"A banda {nomeDaBanda} foi registrada com sucesso!");
-            Thread.Sleep(4000);
-            Console.Clear();
-            ExibirOpcoesDoMenu();
-        }
-
-        void MostrarBandasRegistradas()
-        {
-            Console.Clear();
-            ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação.");
-
-            foreach (string banda in bandasRegistradas.Keys)
-            {
-                Console.WriteLine($"Banda: {banda}");
-            }
-
-            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
-            Console.ReadKey();
-            Console.Clear();
-            ExibirOpcoesDoMenu();
-
-        }
-
-        void ExibirTituloDaOpcao(string titulo)
-        {
-            int quantidadeDeLetras = titulo.Length;
-            string asteriscos = string.Empty.PadLeft(quantidadeDeLetras, '*');
-            Console.WriteLine(asteriscos);
-            Console.WriteLine(titulo);
-            Console.WriteLine(asteriscos + "\n");
-        }
-
-        void AvaliarUmaBanda()
-    
-        {
-            Console.Clear();
-            ExibirTituloDaOpcao("Avaliar banda");
-            Console.Write("Digite o nome da banda que deseja avaliar: ");
-            string nomeDaBanda = Console.ReadLine()!;
-            if (bandasRegistradas.ContainsKey(nomeDaBanda))
-            {
-                Banda banda = bandasRegistradas[nomeDaBanda];
-                Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
-                Avaliacao nota = Avaliacao.Parse(Console.ReadLine()!);
-                banda.AdicionarNota(nota);
-                Console.WriteLine($"\nA nota {nota.Nota} foi registrada com sucesso para a banda {nomeDaBanda}");
-                Thread.Sleep(2000);
-                Console.Clear();
-                ExibirOpcoesDoMenu();
-            }
-
-
-        }
-
         ExibirOpcoesDoMenu();
     }
 }
