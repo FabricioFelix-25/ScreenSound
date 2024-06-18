@@ -3,7 +3,7 @@ using ScreenSound.Modelos;
 
 internal class Program
 {
-    
+
 
     public static void Main(string[] args)
     {
@@ -53,58 +53,20 @@ internal class Program
             string opcaoEscolhida = Console.ReadLine()!;
             int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
 
+           
+
             if (opcoes.ContainsKey(opcaoEscolhidaNumerica))
             {
                 Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
                 menuASerExibido.Executar(bandasRegistradas);
+                if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
             }
             else
             {
                 Console.WriteLine("Opção inválida");
             }
-
-
-
-            switch (opcaoEscolhidaNumerica)
-            {
-                case 1:
-
-                    MenuRegistrarBanda menu1 = new();
-                    menu1 = new MenuRegistrarBanda();
-                    ExibirOpcoesDoMenu();
-                    break;
-                case 2:
-                    MenuRegistrarAlbum menu2 = new();
-                    menu2.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-
-                    break;
-                case 3:
-                    MenuMostrarBandas menu3 = new();
-                    menu3.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-
-                    break;
-                case 4:
-                    MenuAvaliarBanda menu4 = new();
-                    menu4.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-                    break;
-                case 5:
-                    MenuExibirDetalhes menu5 = new();
-                    menu5.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-                    break;
-                case -1:
-                    MenuSair menu0 = new();
-                    menu0.Executar(bandasRegistradas);
-                    Console.WriteLine("Tchau tchau :)");
-                    break;
-                default:
-                    Console.WriteLine("Opção inválida");
-                    break;
-            }
         }
+
         ExibirOpcoesDoMenu();
     }
 }
