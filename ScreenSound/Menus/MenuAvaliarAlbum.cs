@@ -1,5 +1,6 @@
 ﻿
 using ScreenSound.Modelos;
+using System.Linq;
 
 namespace ScreenSound.Menus;
 
@@ -19,19 +20,23 @@ internal class MenuAvaliarAlbum : Menu
             Banda banda = bandasRegistradas[nomeDaBanda];
             Console.Write("Agora digite o título do álbum: ");
             string tituloAlbum = Console.ReadLine()!;
-            if (banda.Albuns.Count > 0)
+            if (banda.Albuns.Any(a => a.Nome.Equals(tituloAlbum)))
             {
-
+                Album album = banda.Albuns.First(a => a.Nome.Equals(tituloAlbum));
                 Console.Write($"Qual a nota que a banda {tituloAlbum} merece: ");
                 Avaliacao nota = Avaliacao.Parse(Console.ReadLine()!);
-                Album album = ?????
                 album.AdicionarNota(nota);
                 Console.WriteLine($"\nA nota {nota.Nota} foi registrada com sucesso para o album {tituloAlbum}");
                 Thread.Sleep(2000);
                 Console.Clear();
             }
-
-
+            else
+            {
+                Console.WriteLine($"\nO Album {tituloAlbum} não foi encontrado!");
+                Console.WriteLine("Digite uma tecla para voltar ao menu principal");
+                Console.ReadKey();
+                Console.Clear();
+            }
         }
         else
         {
